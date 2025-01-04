@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<h1>List of my projects:</h1>
+{% if projects_list %}
+    <ul>
+    {% for project in projects_list %}
+        <li>
+            <a href="/{{project.name}}/details/">{{ project.name }}</a>
+            {% for screen in screenshots_list %}
+            <img src="{{screen.image.url}}">
+            {% endfor %}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No projects are added.</p>
+{% endif %}

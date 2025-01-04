@@ -1,0 +1,7 @@
+*.pyc
+__pycache__/
+db.sqlite3  # Ignore database files if using SQLite
+*.env  # Ignore environment variable files
+*.log  # Ignore log files
+/static/  # Ignore static files if they are not part of the project
+/media/  # Ignore media files if applicable
