@@ -1,17 +1,169 @@
+{% extends "base.html" %}
+{% load static %}
 <!DOCTYPE html>
 
-<h1>List of my projects:</h1>
-{% if projects_list %}
-    <ul>
-    {% for project in projects_list %}
-        <li>
-            <a href="/{{project.name}}/details/">{{ project.name }}</a>
-            {% for screen in screenshots_list %}
-            <img src="{{screen.image.url}}">
-            {% endfor %}
-        </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No projects are added.</p>
-{% endif %}
+
+
+{% block title %}Home - My Portfolio{% endblock %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        /* Basic Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Full viewport height */
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            flex: 1; /* Allows content to grow and push footer down */
+        }
+        .intro {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .intro h2 {
+            font-size: 2em;
+        }
+        .intro p {
+            font-size: 1.2em;
+            color: #555;
+        }
+        .projects {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .project-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 48%;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 0.3s ease-in-out;
+            text-decoration: none; /* Ensure the text is not underlined */
+            color: inherit; /* Keep the default text color */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 400px; /* Set a fixed height for uniform card size */
+        }
+        .project-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover; /* Ensure the image covers the card space without stretching */
+        }
+        .project-card h3 {
+            font-size: 1.5em;
+            margin-top: 10px;
+            flex-grow: 1; /* Allow the title to take up available space */
+        }
+        .project-card p {
+            font-size: 1em;
+            color: #666;
+        }
+        .project-card:hover {
+            transform: scale(1.05);
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 40px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .projects {
+                flex-direction: column;
+                align-items: center;
+            }
+            .project-card {
+                width: 80%;
+                height: auto; /* Allow height to adjust for smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .intro h2 {
+                font-size: 1.6em;
+            }
+            .intro p {
+                font-size: 1em;
+            }
+            .project-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+{% block content %}
+<body>
+
+    <header>
+        <h1>Welcome to My Portfolio</h1>
+        <p>Software Developer | Game Tester</p>
+    </header>
+
+    <div class="container">
+        <section class="intro">
+            <h2>About Me</h2>
+            <p>Hello! I'm a passionate software developer with experience in Python, Django, React, and game testing. I specialize in creating intuitive and engaging software solutions and enjoy learning new technologies.</p>
+        </section>
+
+        <section class="projects">
+            <h2>My Projects</h2>
+
+            {% if projects_list %}
+                <ul>
+                    {% for project in projects_list %}
+                        <a href="/{{ project.name }}/details/" class="project-card">
+                            <div>
+                                <h3>{{ project.name }}</h3>
+                                
+                                    {% for screen in project.screenshots.all %}
+                                        <img src="{{ screen.image.url }}" alt="project">
+                                    {% endfor %}
+           
+                            </div>
+                        </a>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No projects are added.</p>
+            {% endif %}
+
+        </section>
+    </div>
+
+    <footer>
+        <p>Contact me: <a href="mailto:your-email@example.com" style="color: white;">your-email@example.com</a></p>
+    </footer>
+
+</body>
+{% endblock %}
+</html>
